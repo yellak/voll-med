@@ -8,20 +8,20 @@ import med.voll.api.domain.endereco.DadosEndereco;
 
 public record DadosPaciente(
 
-        @NotBlank
+        @NotBlank(message = "{nome.obrigatorio}")
         String nome,
 
-        @NotBlank
-        @Email
+        @NotBlank(message = "{email.obrigatorio}")
+        @Email(message = "{email.invalido}")
         String email,
 
-        @NotBlank
+        @NotBlank(message = "{telefone.obrigatorio}")
         String telefone,
 
-        @NotBlank
+        @NotBlank(message = "{cpf.obrigatorio}")
         String cpf,
 
-        @NotNull
+        @NotNull(message = "{endereco.obrigatorio}")
         @Valid
         DadosEndereco endereco
 ) {
