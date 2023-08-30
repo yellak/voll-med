@@ -9,7 +9,7 @@ import med.voll.api.domain.endereco.Endereco;
 import med.voll.api.domain.endereco.Endereco;
 
 @Table(name = "medicos")
-@Entity
+@Entity(name = "Medico")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
