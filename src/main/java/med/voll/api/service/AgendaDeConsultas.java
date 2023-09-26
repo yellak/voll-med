@@ -20,13 +20,16 @@ public class AgendaDeConsultas {
 
     public Medico obterMedico(DadosAgendamentoConsulta dados) {
         if (dados.idMedico() == null) {
-            return medicoAleatorio();
+            return medicoAleatorio(dados);
         }
         return medicoRepository.findById(dados.idMedico()).orElseThrow(() -> new ValidacaoException("Id do Médico informado não existe"));
     }
 
-    private Medico medicoAleatorio() {
-        return new Medico();
+    private Medico medicoAleatorio(DadosAgendamentoConsulta dados) {
+        if (dados.especialidade() == null) {
+            throw new ValidacaoException("A especialidade é obrigatória quando não se escolhe o médico.");
+        }
+        return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
     }
 
 }
