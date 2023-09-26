@@ -5,8 +5,10 @@ import med.voll.api.domain.consulta.Consulta;
 import med.voll.api.domain.consulta.ConsultaRepository;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
+import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
+import med.voll.api.exception.ValidacaoException;
 import med.voll.api.service.AgendaDeConsultas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +37,11 @@ public class ConsultasController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
-        var medico = medicoRepository.findById(dados.idMedico()).get();
-        var paciente = pacienteRepository.findById(dados.idPaciente()).get();
+        var medico = agenda.obterMedico(dados);
+        var paciente = pacienteRepository.findById(dados.idPaciente()).orElseThrow(() -> new ValidacaoException("Id do paciente informado não existe."));
         var consulta = new Consulta(null, medico, paciente, dados.data());
-        agenda.validaAgendamento(consulta);
+        agenda.validarAgendamento(consulta);
+        repository.save(consulta);
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
     }
 
