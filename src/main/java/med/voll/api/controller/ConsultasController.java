@@ -23,25 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConsultasController {
 
     @Autowired
-    private ConsultaRepository repository;
-
-    @Autowired
     private AgendaDeConsultas agenda;
-
-    @Autowired
-    private MedicoRepository medicoRepository;
-
-    @Autowired
-    private PacienteRepository pacienteRepository;
 
     @PostMapping
     @Transactional
     public ResponseEntity<?> agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
-        var medico = agenda.obterMedico(dados);
-        var paciente = pacienteRepository.findById(dados.idPaciente()).orElseThrow(() -> new ValidacaoException("Id do paciente informado não existe."));
-        var consulta = new Consulta(null, medico, paciente, dados.data());
-        agenda.validarAgendamento(consulta);
-        repository.save(consulta);
+        var consulta = agenda.agendar(dados);
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
     }
 
