@@ -29,7 +29,7 @@ public class ConsultasController {
     @Transactional
     public ResponseEntity<?> agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
         var consulta = agenda.agendar(dados);
-        return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
+        return ResponseEntity.ok(new DadosDetalhamentoConsulta(consulta));
     }
 
 }

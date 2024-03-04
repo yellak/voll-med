@@ -15,4 +15,9 @@ public record DadosDetalhamentoConsulta(
         Especialidade especialidade
 
 ) {
+
+    public DadosDetalhamentoConsulta(Consulta consulta) {
+        this(consulta.getIdMedico(), consulta.getIdPaciente(), consulta.getData(), consulta.getMedico().getEspecialidade());
+    }
+
 }

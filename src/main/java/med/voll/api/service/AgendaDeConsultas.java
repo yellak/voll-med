@@ -26,8 +26,7 @@ public class AgendaDeConsultas {
         var medico = obterMedico(dados);
         var paciente = pacienteRepository.findById(dados.idPaciente()).orElseThrow(() -> new ValidacaoException("Id do paciente informado não existe."));
         var consulta = new Consulta(null, medico, paciente, dados.data());
-        //return repository.save(consulta);
-        return null;
+        return repository.save(consulta);
     }
 
     public Medico obterMedico(DadosAgendamentoConsulta dados) {

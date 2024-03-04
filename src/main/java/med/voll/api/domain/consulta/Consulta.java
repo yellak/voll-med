@@ -32,4 +32,18 @@ public class Consulta {
 
     private LocalDateTime data;
 
+    public Long getIdMedico() {
+        if (medico != null) {
+            return getMedico().getId();
+        }
+        return null;
+    }
+
+    public Long getIdPaciente() {
+        if (paciente != null) {
+            return getPaciente().getId();
+        }
+        return null;
+    }
+
 }
