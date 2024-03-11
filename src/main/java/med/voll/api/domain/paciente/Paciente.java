@@ -40,6 +40,10 @@ public class Paciente {
         this.endereco = new Endereco(dados.endereco());
     }
 
+    public Paciente(Long id) {
+        this.id = id;
+    }
+
     public void atualizaInformacoes(DadosAtualizacaoPaciente dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();

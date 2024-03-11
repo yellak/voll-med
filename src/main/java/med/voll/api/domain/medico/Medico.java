@@ -41,6 +41,10 @@ public class Medico {
         this.endereco = new Endereco(dados.endereco());
     }
 
+    public Medico(Long id) {
+        this.id = id;
+    }
+
     public void atualizaInformacoes(DadosAtualizacaoMedico dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();

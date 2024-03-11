@@ -32,6 +32,11 @@ public class Consulta {
 
     private LocalDateTime data;
 
+    private boolean cancelada;
+
+    @Column(name = "motivo_cancelamento")
+    private String motivoCancelamento;
+
     public Long getIdMedico() {
         if (medico != null) {
             return getMedico().getId();
@@ -46,4 +51,11 @@ public class Consulta {
         return null;
     }
 
+    public void setCancelada(boolean cancelada) {
+        this.cancelada = cancelada;
+    }
+
+    public void setMotivoCancelamento(String motivoCancelamento) {
+        this.motivoCancelamento = motivoCancelamento;
+    }
 }
