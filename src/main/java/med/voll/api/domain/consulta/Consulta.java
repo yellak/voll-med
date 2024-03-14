@@ -34,8 +34,9 @@ public class Consulta {
 
     private boolean cancelada;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "motivo_cancelamento")
-    private String motivoCancelamento;
+    private MotivoCancelamentoConsulta motivoCancelamento;
 
     public Long getIdMedico() {
         if (medico != null) {
@@ -55,7 +56,7 @@ public class Consulta {
         this.cancelada = cancelada;
     }
 
-    public void setMotivoCancelamento(String motivoCancelamento) {
+    public void setMotivoCancelamento(MotivoCancelamentoConsulta motivoCancelamento) {
         this.motivoCancelamento = motivoCancelamento;
     }
 }
