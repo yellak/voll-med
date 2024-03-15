@@ -52,9 +52,7 @@ public class AgendaDeConsultas {
         if (!podeCancelar(consulta)) {
             throw new ValidacaoException("Só é possível cancelar uma consulta com pelo menos 24h de antecedência.");
         }
-        consulta.setCancelada(true);
-        consulta.setMotivoCancelamento(dados.motivoCancelamento());
-        repository.save(consulta);
+        consulta.cancelar(dados.motivoCancelamento());
         return consulta;
     }
 

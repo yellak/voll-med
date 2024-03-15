@@ -52,11 +52,8 @@ public class Consulta {
         return null;
     }
 
-    public void setCancelada(boolean cancelada) {
-        this.cancelada = cancelada;
-    }
-
-    public void setMotivoCancelamento(MotivoCancelamentoConsulta motivoCancelamento) {
+    public void cancelar(MotivoCancelamentoConsulta motivoCancelamento) {
+        this.cancelada = true;
         this.motivoCancelamento = motivoCancelamento;
     }
 }
