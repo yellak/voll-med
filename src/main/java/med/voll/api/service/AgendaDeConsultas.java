@@ -12,6 +12,8 @@ import med.voll.api.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class AgendaDeConsultas {
 
@@ -47,9 +49,20 @@ public class AgendaDeConsultas {
 
     public Consulta cancelar(DadosCancelamentoConsulta dados) {
         var consulta = repository.findByMedicoAndPacienteAndData(new Medico(dados.idMedico()), new Paciente(dados.idPaciente()), dados.data());
+        if (!podeCancelar(consulta)) {
+            throw new ValidacaoException("Só é possível cancelar uma consulta com pelo menos 24h de antecedência.");
+        }
         consulta.setCancelada(true);
         consulta.setMotivoCancelamento(dados.motivoCancelamento());
         repository.save(consulta);
         return consulta;
+    }
+
+    private boolean podeCancelar(Consulta consulta) {
+        var firstDate = new Date();
+        var secondDate = java.sql.Timestamp.valueOf(consulta.getData());
+        long timeDifference = secondDate.getTime() - firstDate.getTime();
+        long hoursDifference = timeDifference / (60 * 60 * 1000); // Convert milliseconds to hours
+        return hoursDifference >= 24;
     }
 }
