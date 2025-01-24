@@ -4,6 +4,7 @@ import med.voll.api.domain.consulta.Consulta;
 import med.voll.api.domain.consulta.ConsultaRepository;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.consulta.DadosCancelamentoConsulta;
+import med.voll.api.domain.consulta.validacoes.ValidadorAgendamentoConsultas;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.Paciente;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AgendaDeConsultas {
@@ -26,9 +28,13 @@ public class AgendaDeConsultas {
     @Autowired
     private ConsultaRepository repository;
 
+    @Autowired
+    private List<ValidadorAgendamentoConsultas> validadores;
+
     public Consulta agendar(DadosAgendamentoConsulta dados) {
         var medico = obterMedico(dados);
         var paciente = pacienteRepository.findById(dados.idPaciente()).orElseThrow(() -> new ValidacaoException("Id do paciente informado não existe."));
+        validadores.forEach(validador -> validador.validar(dados));
         var consulta = new Consulta(null, medico, paciente, dados.data(), false, null);
         return repository.save(consulta);
     }
